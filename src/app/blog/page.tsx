@@ -1,4 +1,4 @@
-import { BlogList } from '@/components/blog/BlogList';
+import BlogList from '../../components/blog/BlogList'
 
 export const metadata = {
   title: 'Blog - AE Fastlane',
@@ -7,19 +7,9 @@ export const metadata = {
 
 export default function BlogPage() {
   return (
-    <div className="container py-12">
-      <div className="space-y-4 text-center">
-        <h1 className="text-4xl font-bold tracking-tight">
-          Our Blog
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Stay updated with the latest insights, guides, and news about business setup and operations in the UAE.
-        </p>
-      </div>
-
-      <div className="mt-12">
-        <BlogList />
-      </div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Blog</h1>
+      <BlogList />
     </div>
-  );
+  )
 } 

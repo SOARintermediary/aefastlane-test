@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
-import { BlogPost } from '@/components/blog/BlogPost';
-import { RelatedPosts } from '@/components/blog/RelatedPosts';
-import { getPostBySlug } from '@/data/blogPosts';
+import { blogPosts } from '../../../data/blogPosts';
 
 interface BlogPostPageProps {
   params: {
@@ -10,24 +8,42 @@ interface BlogPostPageProps {
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = getPostBySlug(params.slug);
+  const post = blogPosts.find((post) => post.slug === params.slug);
 
   if (!post) {
     notFound();
   }
 
   return (
-    <div className="container py-12">
-      <BlogPost post={post} />
-      <div className="mt-16">
-        <RelatedPosts currentPost={post} />
+    <article className="container mx-auto px-4 py-8">
+      <img
+        src={post.image}
+        alt={post.title}
+        className="w-full h-64 md:h-96 object-cover rounded-lg mb-8"
+      />
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <div className="flex items-center gap-4 text-gray-600 mb-8">
+          <span>{post.category}</span>
+          <span>•</span>
+          <time>
+            {new Date(post.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+        </div>
+        <div className="prose prose-lg max-w-none">
+          {post.content}
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
-  const post = getPostBySlug(params.slug);
+  const post = blogPosts.find((post) => post.slug === params.slug);
 
   if (!post) {
     return {

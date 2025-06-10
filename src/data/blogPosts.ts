@@ -4,140 +4,53 @@ export type BlogCategory = 'getting-started' | 'setup-guides' | 'visa-immigratio
 
 export interface BlogPost {
   id: string;
-  title: string;
-  description: string;
-  content: string;
-  category: BlogCategory;
-  icon: any; // Lucide icon type
-  readTime: number;
-  date: string;
-  author: string;
-  tags: string[];
   slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  category: string;
+  image: string;
 }
 
-export const categories: { id: BlogCategory; label: string; icon: any }[] = [
-  {
-    id: 'getting-started',
-    label: 'Getting Started',
-    icon: Globe
-  },
-  {
-    id: 'setup-guides',
-    label: 'Setup Guides',
-    icon: Building2
-  },
-  {
-    id: 'visa-immigration',
-    label: 'Visa & Immigration',
-    icon: Users
-  },
-  {
-    id: 'operations',
-    label: 'Operations & Compliance',
-    icon: Settings
-  }
+export const categories = [
+  'Business Setup',
+  'Company Formation',
+  'Legal Updates',
+  'Market Insights',
+  'UAE Economy'
 ];
 
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    title: 'Free Zone vs Mainland: Which is Right for Your UAE Business?',
-    description: 'Discover the key differences between free zone and mainland business setup in the UAE, and learn which option best suits your business goals and requirements.',
-    content: `
-      Understanding the basics of UAE business setup is crucial for entrepreneurs looking to establish their presence in the region. The UAE offers two main business setup options: Free Zones and Mainland.
-
-      Free Zone Benefits:
-      • 100% foreign ownership
-      • No corporate taxes (in most zones)
-      • No personal income tax
-      • Full profit repatriation
-      • Simplified setup process
-      • No currency restrictions
-
-      Mainland Benefits:
-      • Access to UAE local market
-      • Ability to deal with government entities
-      • Wide range of business activities
-      • Can open offices anywhere in UAE
-      • Direct import/export capabilities
-      • No location restrictions
-
-      Making the right choice depends on your specific business model, target market, and long-term goals. Our experts can help you analyze your requirements and make the right choice.
-    `,
-    category: 'getting-started',
-    icon: Building2,
-    readTime: 8,
-    date: '2024-03-20',
-    author: 'AE Fastlane Team',
-    tags: ['free zone', 'mainland', 'business setup', 'UAE'],
-    slug: 'free-zone-vs-mainland'
+    slug: 'guide-to-business-setup-in-uae',
+    title: 'Complete Guide to Business Setup in UAE',
+    excerpt: 'Everything you need to know about setting up your business in the UAE, from licensing to location selection.',
+    content: 'Full article content here...',
+    date: '2024-03-10',
+    category: 'Business Setup',
+    image: '/images/blog/business-setup.jpg'
   },
   {
     id: '2',
-    title: 'Golden Visa Eligibility & Application Process',
-    description: 'The UAE\'s Golden Visa offers long-term residency to investors, entrepreneurs, and professionals. Find out if you qualify and how to apply.',
-    content: `
-      The UAE Golden Visa program offers long-term residency options for qualified individuals, providing stability and opportunities for business growth.
-
-      Key Benefits:
-      • Long-term residency (5-10 years)
-      • 100% business ownership
-      • Family sponsorship
-      • No sponsor required
-      • Multiple entry/exit
-      • Automatic renewal
-
-      Eligibility Categories:
-      • Investors
-      • Entrepreneurs
-      • Specialized talents
-      • Outstanding students
-      • Humanitarian pioneers
-      • Frontline heroes
-
-      Our team can guide you through the entire Golden Visa application process, ensuring you meet all requirements and submit a successful application.
-    `,
-    category: 'visa-immigration',
-    icon: Shield,
-    readTime: 10,
-    date: '2024-03-19',
-    author: 'AE Fastlane Team',
-    tags: ['golden visa', 'residency', 'UAE visa', 'immigration'],
-    slug: 'golden-visa-guide'
+    slug: 'free-zone-vs-mainland',
+    title: 'Free Zone vs Mainland: Making the Right Choice',
+    excerpt: 'Compare the benefits and considerations of setting up in UAE Free Zones versus Mainland.',
+    content: 'Full article content here...',
+    date: '2024-03-08',
+    category: 'Company Formation',
+    image: '/images/blog/free-zone.jpg'
   },
   {
     id: '3',
-    title: 'Starting a Business in the UAE as a Foreigner',
-    description: 'Everything foreign entrepreneurs need to know about starting a business in the UAE, from legal requirements to practical considerations.',
-    content: `
-      Starting a business in the UAE offers incredible opportunities for foreign entrepreneurs. This guide covers everything you need to know to get started.
-
-      Key Requirements:
-      • Choose your business activity
-      • Select your company structure
-      • Obtain necessary approvals
-      • Complete documentation
-      • Secure your location
-      • Open a bank account
-
-      Business Activities:
-      • General Trading
-      • Professional Services
-      • Industrial
-      • Commercial
-      • Tourism
-      • Technology
-
-      Let our experts guide you through the entire process, ensuring compliance and a smooth setup experience.
-    `,
-    category: 'getting-started',
-    icon: Briefcase,
-    readTime: 12,
-    date: '2024-03-18',
-    author: 'AE Fastlane Team',
-    tags: ['business setup', 'entrepreneurship', 'UAE business', 'foreign investment'],
-    slug: 'business-setup'
+    slug: 'uae-corporate-tax-2024',
+    title: 'UAE Corporate Tax 2024: What You Need to Know',
+    excerpt: 'Understanding the new corporate tax framework and its implications for businesses.',
+    content: 'Full article content here...',
+    date: '2024-03-05',
+    category: 'Legal Updates',
+    image: '/images/blog/corporate-tax.jpg'
   }
 ];
 

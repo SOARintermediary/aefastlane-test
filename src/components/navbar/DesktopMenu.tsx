@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import LanguageSwitch from '../LanguageSwitch';
 import BlogDropdown from './BlogDropdown';
 
@@ -27,23 +27,34 @@ const DesktopMenu: FC<DesktopMenuProps> = ({ isBlogOpen, setIsBlogOpen }) => {
 
   return (
     <div className={`hidden md:flex items-center ${isRTL ? 'space-x-reverse space-x-8' : 'space-x-8'}`}>
-      <button 
-        onClick={() => scrollToSection('services')}
-        className="text-primary hover:text-primary-light transition-all duration-300 hover:scale-105 focus:outline-none"
+      <Link
+        href="/"
+        className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
       >
-        {t('nav.services')}
-      </button>
+        Home
+      </Link>
+      <Link
+        href="/services"
+        className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Services
+      </Link>
+      <Link
+        href="/blog"
+        className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Blog
+      </Link>
+      <Link
+        href="/contact"
+        className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+      >
+        Contact
+      </Link>
       
       <BlogDropdown isOpen={isBlogOpen} setIsOpen={setIsBlogOpen} />
       
       <LanguageSwitch />
-      
-      <button
-        onClick={() => scrollToSection('contact')}
-        className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-light transition-all duration-300 hover:scale-105 hover:shadow-md focus:outline-none active:scale-95"
-      >
-        {t('nav.contactUs')}
-      </button>
     </div>
   );
 };

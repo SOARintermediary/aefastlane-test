@@ -1,13 +1,14 @@
+import Link from 'next/link'
 import { type FC } from 'react';
-import { Link } from 'react-router-dom';
 import LanguageSwitch from '../LanguageSwitch';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 interface MobileMenuProps {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const MobileMenu: FC<MobileMenuProps> = ({ isOpen }) => {
+const MobileMenu: FC<MobileMenuProps> = ({ isOpen, setIsOpen }) => {
   const { t } = useLanguage();
 
   const scrollToSection = (sectionId: string) => {
@@ -27,27 +28,34 @@ const MobileMenu: FC<MobileMenuProps> = ({ isOpen }) => {
   return (
     <div className="md:hidden bg-white shadow-lg">
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <button
-          onClick={() => scrollToSection('services')}
-          className="w-full text-left px-3 py-2 text-primary hover:text-primary-light transition-all duration-300 hover:bg-gray-50 rounded-md focus:outline-none"
+        <Link
+          href="/"
+          className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          onClick={() => setIsOpen(false)}
+        >
+          {t('nav.home')}
+        </Link>
+        <Link
+          href="/services"
+          className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          onClick={() => setIsOpen(false)}
         >
           {t('nav.services')}
-        </button>
-        
-        <Link 
-          to="/blog"
-          className="block px-3 py-2 text-primary hover:text-primary-light transition-all duration-300 hover:bg-gray-50 rounded-md"
+        </Link>
+        <Link
+          href="/blog"
+          className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          onClick={() => setIsOpen(false)}
         >
           {t('nav.blog')}
         </Link>
-        
-        <button
-          onClick={() => scrollToSection('contact')}
-          className="w-full text-left px-3 py-2 text-primary hover:text-primary-light transition-all duration-300 hover:bg-gray-50 rounded-md focus:outline-none"
+        <Link
+          href="/contact"
+          className="text-gray-600 hover:text-gray-900 block px-3 py-2 rounded-md text-base font-medium"
+          onClick={() => setIsOpen(false)}
         >
           {t('nav.contactUs')}
-        </button>
-        
+        </Link>
         <div className="px-3 py-2">
           <LanguageSwitch />
         </div>
