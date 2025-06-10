@@ -42,18 +42,18 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   );
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps) {
+export function generateMetadata({ params }: BlogPostPageProps) {
   const post = blogPosts.find((post) => post.slug === params.slug);
 
   if (!post) {
     return {
-      title: 'Post Not Found - AE Fastlane',
-      description: 'The requested blog post could not be found.',
+      title: 'Post Not Found',
+      description: 'The requested blog post could not be found.'
     };
   }
 
   return {
-    title: `${post.title} - AE Fastlane Blog`,
-    description: post.description,
+    title: post.title,
+    description: post.excerpt
   };
 } 

@@ -11,6 +11,7 @@ export interface BlogPost {
   date: string;
   category: string;
   image: string;
+  tags?: string[];
 }
 
 export const categories = [
@@ -30,7 +31,8 @@ export const blogPosts: BlogPost[] = [
     content: 'Full article content here...',
     date: '2024-03-10',
     category: 'Business Setup',
-    image: '/images/blog/business-setup.jpg'
+    image: '/images/blog/business-setup.jpg',
+    tags: ['business setup', 'uae', 'guide']
   },
   {
     id: '2',
@@ -40,7 +42,8 @@ export const blogPosts: BlogPost[] = [
     content: 'Full article content here...',
     date: '2024-03-08',
     category: 'Company Formation',
-    image: '/images/blog/free-zone.jpg'
+    image: '/images/blog/free-zone.jpg',
+    tags: ['free zone', 'mainland', 'comparison']
   },
   {
     id: '3',
@@ -50,26 +53,20 @@ export const blogPosts: BlogPost[] = [
     content: 'Full article content here...',
     date: '2024-03-05',
     category: 'Legal Updates',
-    image: '/images/blog/corporate-tax.jpg'
+    image: '/images/blog/corporate-tax.jpg',
+    tags: ['tax', 'corporate', 'legal']
   }
 ];
 
 export const getRelatedPosts = (currentPost: BlogPost, limit: number = 3): BlogPost[] => {
-  // First, try to find posts in the same category
-  const sameCategoryPosts = blogPosts.filter(
-    post => post.category === currentPost.category && post.id !== currentPost.id
-  );
-
-  // Then, find posts with matching tags
-  const relatedByTags = blogPosts.filter(
-    post => 
-      post.id !== currentPost.id &&
-      post.category !== currentPost.category &&
-      post.tags.some(tag => currentPost.tags.includes(tag))
-  );
-
-  // Combine and limit the results
-  return [...sameCategoryPosts, ...relatedByTags].slice(0, limit);
+  return blogPosts
+    .filter(post => 
+      post.id !== currentPost.id && 
+      (post.category === currentPost.category || 
+       (post.tags && currentPost.tags && 
+        post.tags.some(tag => currentPost.tags?.includes(tag))))
+    )
+    .slice(0, limit);
 };
 
 export const getPostsByCategory = (category: BlogCategory): BlogPost[] => {
