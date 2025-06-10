@@ -7,9 +7,17 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  isRTL: boolean;
 }
 
-const translations = {
+type TranslationRecord = Record<string, string>;
+
+interface TranslationsType {
+  en: TranslationRecord;
+  ar: TranslationRecord;
+}
+
+const translations: TranslationsType = {
   en: {
     ...blogTranslations.en,
     // Features Section
@@ -544,47 +552,61 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize from localStorage or default to 'en'
+  // Try to get the language from localStorage, default to 'en'
   const [language, setLanguageState] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem('language');
-    return (savedLanguage === 'ar' || savedLanguage === 'en') ? savedLanguage : 'en';
+    const savedLang = localStorage.getItem('language');
+    return (savedLang === 'en' || savedLang === 'ar') ? savedLang : 'en';
   });
+
+  const isRTL = language === 'ar';
+
+  useEffect(() => {
+    // Update localStorage when language changes
+    localStorage.setItem('language', language);
+    
+    // Update document direction
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+    
+    // Add/remove RTL class to body
+    if (isRTL) {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+  }, [language, isRTL]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    
-    // Force reload styles for RTL/LTR switch
-    const links = document.getElementsByTagName('link');
-    for (let i = 0; i < links.length; i++) {
-      const link = links[i];
-      if (link.rel === 'stylesheet') {
-        link.href = link.href.split('?')[0] + '?v=' + new Date().getTime();
+  };
+
+  const t = (key: string): string => {
+    try {
+      const translation = translations[language][key];
+      if (!translation) {
+        console.warn(`Translation missing for key: ${key} in language: ${language}`);
+        // Fallback to English if Arabic translation is missing
+        if (language === 'ar' && translations.en[key]) {
+          return translations.en[key];
+        }
+        return key;
       }
+      return translation;
+    } catch (error) {
+      console.error(`Error getting translation for key: ${key}`, error);
+      return key;
     }
   };
 
-  useEffect(() => {
-    // Set initial direction and language
-    document.documentElement.lang = language;
-    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
-    
-    // Add CSS variables for RTL support
-    document.documentElement.style.setProperty('--direction', language === 'ar' ? 'rtl' : 'ltr');
-    document.documentElement.style.setProperty('--reverse-direction', language === 'ar' ? 'ltr' : 'rtl');
-    document.documentElement.style.setProperty('--start', language === 'ar' ? 'right' : 'left');
-    document.documentElement.style.setProperty('--end', language === 'ar' ? 'left' : 'right');
-  }, [language]);
-
-  const t = (key: string): string => {
-    const currentTranslations = translations[language];
-    return currentTranslations[key as keyof typeof currentTranslations] || key;
+  const value = {
+    language,
+    setLanguage,
+    t,
+    isRTL
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
@@ -597,3 +619,5 @@ export const useLanguage = () => {
   }
   return context;
 };
+
+export default LanguageContext;

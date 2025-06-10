@@ -1,27 +1,42 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+module.exports = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#1B2B65',
-          light: '#2A3D7D'
+          DEFAULT: '#0070f3',
+          foreground: '#ffffff',
         },
-        accent: {
-          DEFAULT: '#C5E86C',
-          dark: '#B2D559'
+        background: '#ffffff',
+        foreground: '#000000',
+        muted: {
+          DEFAULT: '#f3f4f6',
+          foreground: '#6b7280',
         },
-        teal: {
-          DEFAULT: '#008080',
-          dark: '#006666'
-        }
       },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        arabic: ['Noto Sans Arabic', 'system-ui', 'sans-serif'],
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: '#0070f3',
+              textDecoration: 'none',
+              '&:hover': {
+                color: '#0051a2',
+              },
+            },
+          },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };

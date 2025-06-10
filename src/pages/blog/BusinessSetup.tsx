@@ -1,60 +1,55 @@
 import React from 'react';
-import { Building2 } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 import BlogArticle from '../../components/blog/BlogArticle';
 import BlogSection from '../../components/blog/BlogSection';
 import { useLanguage } from '../../contexts/LanguageContext';
 
-const FreeZoneVsMainland: React.FC = () => {
+const BusinessSetup: React.FC = () => {
   const { t } = useLanguage();
 
   return (
     <BlogArticle
-      icon={Building2}
+      icon={Briefcase}
       category="blog.categories.gettingStarted"
-      titleKey="blog.freeZoneVsMainland.title"
-      descriptionKey="blog.freeZoneVsMainland.description"
+      titleKey="blog.businessSetup.title"
+      descriptionKey="blog.businessSetup.description"
     >
-      {/* Understanding the Basics */}
+      {/* Requirements */}
       <BlogSection
-        titleKey="blog.freeZoneVsMainland.basics.title"
-        contentKey="blog.freeZoneVsMainland.basics.description"
-      />
-
-      {/* Key Differences */}
-      <BlogSection titleKey="blog.freeZoneVsMainland.comparison.title">
+        titleKey="blog.businessSetup.requirements.title"
+      >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="font-semibold mb-2">
-              {t('blog.freeZoneVsMainland.comparison.ownership')}
+              {t('blog.businessSetup.requirements.legal')}
             </h3>
-            <p>100% Foreign Ownership</p>
+            <p className="text-gray-700">
+              {t('blog.businessSetup.requirements.legalDescription')}
+            </p>
           </div>
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="font-semibold mb-2">
-              {t('blog.freeZoneVsMainland.comparison.market')}
+              {t('blog.businessSetup.requirements.documents')}
             </h3>
-            <p>Limited to Free Zone & Export</p>
+            <p className="text-gray-700">
+              {t('blog.businessSetup.requirements.documentsDescription')}
+            </p>
           </div>
           <div className="bg-gray-50 p-6 rounded-lg">
             <h3 className="font-semibold mb-2">
-              {t('blog.freeZoneVsMainland.comparison.location')}
+              {t('blog.businessSetup.requirements.capital')}
             </h3>
-            <p>Must be within Free Zone</p>
+            <p className="text-gray-700">
+              {t('blog.businessSetup.requirements.capitalDescription')}
+            </p>
           </div>
         </div>
       </BlogSection>
 
-      {/* Free Zone Benefits */}
+      {/* Business Activities */}
       <BlogSection
-        titleKey="blog.freeZoneVsMainland.freeZone.title"
-        listKey="blog.freeZoneVsMainland.freeZone.benefits"
-        className="mt-8"
-      />
-
-      {/* Mainland Benefits */}
-      <BlogSection
-        titleKey="blog.freeZoneVsMainland.mainland.title"
-        listKey="blog.freeZoneVsMainland.mainland.benefits"
+        titleKey="blog.businessActivities.popular.title"
+        listKey="blog.businessActivities.popular.items"
         className="mt-8"
       />
 
@@ -64,7 +59,7 @@ const FreeZoneVsMainland: React.FC = () => {
           {t('blog.common.consultation')}
         </h3>
         <p className="text-gray-700 mb-6">
-          {t('blog.freeZoneVsMainland.needHelp.description')}
+          {t('blog.businessSetup.needHelp.description')}
         </p>
         <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors duration-200">
           {t('blog.common.getStarted')}
@@ -74,4 +69,4 @@ const FreeZoneVsMainland: React.FC = () => {
   );
 };
 
-export default FreeZoneVsMainland;
+export default BusinessSetup; 
