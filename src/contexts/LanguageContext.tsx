@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { blogTranslations } from '../translations/blog';
 
@@ -552,61 +554,38 @@ const translations: TranslationsType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Try to get the language from localStorage, default to 'en'
-  const [language, setLanguageState] = useState<Language>(() => {
-    const savedLang = localStorage.getItem('language');
-    return (savedLang === 'en' || savedLang === 'ar') ? savedLang : 'en';
-  });
-
-  const isRTL = language === 'ar';
+  const [language, setLanguageState] = useState<Language>('en');
+  const [isRTL, setIsRTL] = useState(false);
 
   useEffect(() => {
-    // Update localStorage when language changes
-    localStorage.setItem('language', language);
-    
-    // Update document direction
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    document.documentElement.lang = language;
-    
-    // Add/remove RTL class to body
-    if (isRTL) {
-      document.body.classList.add('rtl');
-    } else {
-      document.body.classList.remove('rtl');
+    if (typeof window !== 'undefined') {
+      const savedLanguage = localStorage.getItem('language') as Language;
+      if (savedLanguage) {
+        setLanguageState(savedLanguage);
+        setIsRTL(savedLanguage === 'ar');
+      }
     }
-  }, [language, isRTL]);
+  }, []);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-  };
-
-  const t = (key: string): string => {
-    try {
-      const translation = translations[language][key];
-      if (!translation) {
-        console.warn(`Translation missing for key: ${key} in language: ${language}`);
-        // Fallback to English if Arabic translation is missing
-        if (language === 'ar' && translations.en[key]) {
-          return translations.en[key];
-        }
-        return key;
-      }
-      return translation;
-    } catch (error) {
-      console.error(`Error getting translation for key: ${key}`, error);
-      return key;
+    setIsRTL(lang === 'ar');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang);
     }
   };
 
-  const value = {
-    language,
-    setLanguage,
-    t,
-    isRTL
+  const t = (key: string): string => {
+    const translation = translations[language][key];
+    if (!translation) {
+      console.warn(`Translation missing for key: ${key}`);
+      return key;
+    }
+    return translation;
   };
 
   return (
-    <LanguageContext.Provider value={value}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, isRTL }}>
       {children}
     </LanguageContext.Provider>
   );

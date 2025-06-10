@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { BlogPost as BlogPostType } from '@/data/blogPosts';
-import { Clock, Calendar, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Calendar, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BlogPostProps {
@@ -9,8 +9,6 @@ interface BlogPostProps {
 }
 
 export const BlogPost: FC<BlogPostProps> = ({ post, className }) => {
-  const Icon = post.icon;
-
   const shareUrl = typeof window !== 'undefined' 
     ? window.location.href 
     : '';
@@ -24,26 +22,13 @@ export const BlogPost: FC<BlogPostProps> = ({ post, className }) => {
   return (
     <article className={cn('max-w-3xl mx-auto', className)}>
       <div className="space-y-4">
-        <div className="flex items-center gap-4">
-          <div className="rounded-full bg-primary/10 p-2">
-            <Icon className="h-6 w-6 text-primary" />
-          </div>
-          <span className="text-sm font-medium text-muted-foreground">
-            {post.category.split('-').map((word: string) => 
-              word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ')}
-          </span>
-        </div>
-
+        <span className="text-sm font-medium text-blue-600 mb-2">
+          {post.category}
+        </span>
         <h1 className="text-4xl font-bold tracking-tight">
           {post.title}
         </h1>
-
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <Clock className="h-4 w-4" />
-            <span>{post.readTime} min read</span>
-          </div>
+        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             <span>{new Date(post.date).toLocaleDateString('en-US', {
@@ -52,13 +37,9 @@ export const BlogPost: FC<BlogPostProps> = ({ post, className }) => {
               year: 'numeric'
             })}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span>By {post.author}</span>
-          </div>
         </div>
-
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="flex items-center gap-2 text-sm text-gray-500">
             <Share2 className="h-4 w-4" />
             Share
           </span>
@@ -93,7 +74,6 @@ export const BlogPost: FC<BlogPostProps> = ({ post, className }) => {
           </div>
         </div>
       </div>
-
       <div className="mt-8 prose prose-slate max-w-none">
         {post.content.split('\n').map((paragraph: string, index: number) => (
           <p key={index}>{paragraph.trim()}</p>

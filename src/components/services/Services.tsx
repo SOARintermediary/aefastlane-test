@@ -1,11 +1,11 @@
+'use client';
+
 import { type FC } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
 import ServiceCard from './ServiceCard';
 import { services } from './serviceData';
 
 const Services: FC = () => {
-  const navigate = useNavigate();
   const { t } = useLanguage();
 
   return (
@@ -23,11 +23,10 @@ const Services: FC = () => {
         <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, index) => (
             <ServiceCard
-              key={index}
+              key={service.key}
               title={t(`services.${service.key}.title`)}
               description={t(`services.${service.key}.description`)}
               icon={service.icon}
-              onClick={() => navigate(service.path)}
             />
           ))}
         </div>

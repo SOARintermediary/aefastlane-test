@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowLeft, LucideIcon } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { useRouter } from 'next/navigation';
 
 interface BlogArticleProps {
   icon: LucideIcon;
@@ -13,12 +13,12 @@ interface BlogArticleProps {
 
 // Separate component for the back button to improve modularity
 const BackToBlogs: React.FC<{ isRTL: boolean }> = ({ isRTL }) => {
-  const navigate = useNavigate();
   const { t } = useLanguage();
+  const router = useRouter();
 
   return (
     <button
-      onClick={() => navigate('/blog')}
+      onClick={() => router.push('/blog')}
       className="flex items-center text-primary hover:text-primary-light mb-8 transition-colors duration-200"
     >
       <ArrowLeft className={`h-5 w-5 ${isRTL ? 'ml-2 rotate-180' : 'mr-2'}`} />
